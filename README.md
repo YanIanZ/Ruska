@@ -52,3 +52,27 @@ Blast Radius Zero: public web/backend on Vultr VM, Vultr Serverless Inference fo
 - [ ] Sandbox resource/network containment evidence and final submission.
 
 See [AGENTS.md](AGENTS.md), [SECURITY.md](SECURITY.md) and [CONTRIBUTING.md](CONTRIBUTING.md). Historical docs numbered 01–30 may discuss old ideas; those are superseded by RELIC 31–41.
+
+## RELIC 2.0: Continuity Engineering (new direction, not a new pivot)
+
+The updated product keeps the same legacy-restoration mission but adds **Counterfactual Archaeology**, a **Continuity Atlas**, and an **Executable Continuity Passport**. The distinguishing question is: *Which exact inputs reveal that the modern replacement broke an undocumented legacy rule?*
+
+- [2.0 North Star](docs/42-RELIC-2-0-NORTH-STAR.md) — differentiated product thesis
+- [Counterfactual Engine](docs/43-COUNTERFACTUAL-ARCHAEOLOGY.md) — bounded safe experiments and minimal counterexamples
+- [Continuity Passport](docs/44-CONTINUITY-PASSPORT.md) — executable evidence and explicit unknowns
+- [Demonstration strategy](docs/45-DEMO-AMPLIFIER.md) — old/new, regression, correction, containment
+- [Delivery scorecard](docs/46-RELIC-DELIVERY-SCORECARD.md) — P0/P1/P2 scope and stop rules
+
+### Runnable *offline* parity laboratory
+
+An intentionally incorrect candidate accepts urgent descriptions too short for the owned legacy fixture; a strict reference-model comparator discovers the mismatch and reports the smallest bounded synthetic counterexample. A corrected candidate passes all four fixed cases.
+
+\`\`\`bash
+python3 examples/relic-lab/parity_lab.py --candidate examples/relic-lab/candidate-wrong.json
+# Expected exit 1 (a failure is the point).
+python3 examples/relic-lab/parity_lab.py --candidate examples/relic-lab/candidate-correct.json
+# Expected exit 0.
+python3 -m unittest discover -s tests -p "test_relic_*.py" -v
+\`\`\`
+
+**Honest boundary:** This prototype uses handwritten reference and candidate models, *not* a live Playwright browser, Vultr inference or sandbox. Its JSON reports explicitly state these limitations. [Lab documentation](examples/relic-lab/README.md). The required cloud product, generated code/build, browser observations and containment remain unimplemented.

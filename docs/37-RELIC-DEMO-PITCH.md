@@ -19,3 +19,7 @@ Tagline: **Old software shouldn't take essential services with it.**
 
 ## Submission
 Public GitHub, live web UI on Vultr, architecture details, short video with containment and the model actually producing code or browser steps, disclosed limitations. Confirm official cutoff and exact policy from event site before final upload.
+
+## RELIC 2.0 signature moment
+
+The centerpiece is the **counterfactual discovery of a missing requirement**: the first rebuilt interface looks modern and functional but allows a too-short urgent report. The paired run produces a red behavioral mismatch, a bounded probe shows a minimal reproducible failing input, and an actual code revision passes the same case. The exported Continuity Passport includes exact case input and all known unknowns. Show the real containment test separately; never conflate a parity PASS with sandbox security.

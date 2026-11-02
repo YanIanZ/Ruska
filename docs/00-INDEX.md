@@ -22,3 +22,15 @@ Machine contracts: [genome JSON Schema](../schemas/behavior-genome.schema.json),
 Documents 01–30, schemas/openapi.yaml, old procurement fixtures and earlier Fabric design are **historical**, not current instructions. Current RELIC 31–41 takes precedence. We deliberately do not remove Git history. If any older document conflicts with the RELIC PRD, ignore older requirements for implementation.
 
 No features, integration/security tests, or Vultr deployment have been verified as shipped. Official hackathon rules override all docs: https://lablab.ai/ai-hackathons/vultr-hackathon
+
+## RELIC 2.0 depth addenda — design
+
+| File | Role |
+|---|---|
+| [42 — Continuity Engineering](42-RELIC-2-0-NORTH-STAR.md) | Product innovation and niche |
+| [43 — Counterfactual Archaeology](43-COUNTERFACTUAL-ARCHAEOLOGY.md) | Safe behavior discovery and probe search |
+| [44 — Continuity Passport](44-CONTINUITY-PASSPORT.md) | Exportable executable proof with assurance labels |
+| [45 — Demo Amplifier](45-DEMO-AMPLIFIER.md) | Show-before/after plus regression detection |
+| [46 — Delivery Scorecard](46-RELIC-DELIVERY-SCORECARD.md) | Scope, daily checkpoints and go/no-go |
+
+The code in [examples/relic-lab](../examples/relic-lab/README.md) is an **offline synthetic model-parity prototype**, not the real browser + AI product. Documents 31–41 remain the foundational RELIC architecture; 42–46 add design depth without changing its target use case.

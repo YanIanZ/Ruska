@@ -52,3 +52,22 @@ Explored path count, known rule coverage, behavioral parity pass/total, accessib
 
 ## 10. User-facing terminology
 OBSERVED = captured from the original owned demo; HYPOTHESIS = model guess not independently reproduced; UNKNOWN = outside coverage; PARITY PASSED = exact tested journeys agree; READY FOR REVIEW = not production-ready; REJECTED = mismatch/block.
+
+## 11. RELIC 2.0 — Product depth addendum (not a new product)
+
+**User outcome:** A maintainer can identify which exact hidden workflow rule is violated by a modern candidate and produce a reproducible minimal counterexample. The interface shows tested vs untested behavior; nothing is declared universally restored.
+
+### Additional requirements
+- CF-01: AI may propose **bounded safe probes** only for a registered, owned target; control plane decides exact execution capability and cost.
+- CF-02: Behavior Genome records *source trace* and epistemic status for each rule (OBSERVED/INFERRED/UNKNOWN), plus the coverage denominator.
+- CF-03: When parity differs, present the exact fixture input and both normalized outcomes; attempt bounded counterexample minimization on an isolated synthetic environment.
+- CF-04: A Continuity Passport exports candidate revision, test code, environment, observed trace hashes, unresolved rules and required human sign-off.
+- CF-05: The product never calls an untested workflow "restored"; security and functionality verdicts remain independent.
+
+### Current executable prototype
+The **offline** Python parity lab uses a handwritten model of the owned synthetic portal; it is not a substitute for P0 live Playwright, AI code generation or Vultr deployment. See [lab README](../examples/relic-lab/README.md). Two typed candidate specs make a failing vs passing conditional validation rule reproducible without network or dependencies.
+
+### Acceptance extension
+Wrong candidate threshold 10 fails the known urgent-description case; correct threshold 30 passes four fixture cases. The bounded 0–40 description probe finds a counterexample to the wrong candidate but none against the matching model in that range. This is **coverage of a limited mock**, not global behavioral parity.
+
+See [Counterfactual Engine](43-COUNTERFACTUAL-ARCHAEOLOGY.md), [Passport](44-CONTINUITY-PASSPORT.md) and [two-speed delivery](46-RELIC-DELIVERY-SCORECARD.md).

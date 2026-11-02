@@ -31,3 +31,9 @@ Critical security tests must pass for public runner. Any new ability to explore 
 
 ## Limitation honesty
 No static HTML + screenshot can reconstruct private backend semantics. No 100% parity beyond test coverage. No "unhackable sandbox" or formal WCAG certification based solely on automated tests.
+
+## Counterfactual probing additional threat boundaries
+
+The probe chooser is not authorized to discover arbitrary web services. It may choose **only** safe typed mutations to registered form inputs on an owner-authored synthetic target. Enforce a per-mission budget (actions, wall clock, network requests, output bytes), server-side egress policy and disposable fixture reset. Treat generated probes as untrusted until approved by deterministic policy; do not infer consent or authorization from an LLM-generated plan. Never send probes to real government or institutional portals without separate explicit owner authorization.
+
+Differential findings can be misleading when the original application has nondeterministic timestamps, session-dependent behavior or inaccessible server-side rules. Normalize known volatile fields only; label uncertainty instead of ignoring divergences. Offline handwritten reference models are not browser-captured original truth.

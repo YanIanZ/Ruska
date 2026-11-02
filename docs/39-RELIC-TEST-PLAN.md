@@ -22,3 +22,13 @@ Status: NOT RUN. Evidence is required before marking any item passed.
 | D16 | P1 | Downloaded Revival Capsule source/tests | Unpack and reproduce fixture results |
 
 Never fabricate test results or screenshots. Report commit SHA, observed run IDs, seed data and reason for any INCONCLUSIVE outcome. One failed critical security gate blocks publicly accessible sandbox execution.
+
+## Offline baseline — a separate test tier, not live product evidence
+
+- LAB-01: Correct typed candidate => four fixture cases PASS; zero mismatches in 41 bounded synthetic description-length probes.
+- LAB-02: Wrong candidate => one fixture FAIL; at least one counterexample (the current wrong threshold 10 yields mismatches for lengths 10..29).
+- LAB-03: Reject candidate JSON with unexpected keys, non-boolean requiredness or non-integer threshold.
+- LAB-04: 29-character urgent description rejected by authored reference model; 30-character accepted.
+- LAB-05: Reports must label browser, Vultr inference, sandbox containment and generated source build as **not tested**.
+
+See [the runnable offline lab](../examples/relic-lab/README.md). These tests cannot replace live isolated Playwright/code execution tests in the earlier P0 matrix. CI passes only prove the fixture-level model experiment works.

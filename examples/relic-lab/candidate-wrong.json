@@ -1,0 +1,5 @@
+{
+  "schema_version": "relic-candidate-model-v1",
+  "requires_region": true,
+  "urgent_min_description_length": 10
+}

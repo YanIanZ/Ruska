@@ -25,3 +25,7 @@ Status: proposed; current state is documentation only.
 
 ## Scope-cut decisions
 If browser runner not working by Nov 4, cut auto-generation polish and fix browser. If generation cannot be made reproducible by Nov 5, use constrained JSON component DSL + LLM-authored DSL (still actual inference and generated code), avoid free-form package install. If unsafe egress, disable public run and show controlled prerecorded evidence plus static preview only; this cannot substitute for required real execution in final submission, so fix isolation before submission. Do not fabricate functionality.
+
+## 2.0 execution rules
+
+The active schedule is now tracked in [RELIC 2.0 scorecard](46-RELIC-DELIVERY-SCORECARD.md). **Critical path remains actual browser and code execution on Vultr**, not expansion into numerous tools. Counterfactual probing against a typed owned fixture is a high-value addition; broader autonomous discovery, second workflow, full Passport signatures, enterprise services and microVM optimization are stretch or post-event. The offline lab is runnable prep work but does not fulfill any cloud or sandbox requirement.

@@ -28,3 +28,9 @@ Parity journeys passed / tested; explicit UNKNOWN states; generated code build s
 
 ## Limitations and go-to-market
 Begin with owned mock community portal and authorized pilots. Source-free reconstruction cannot infer all server rules. A human owner must approve behavior contract and migration. Commercial model after event: priced discovery/proof package and assisted migration, not auto-replacement of critical services.
+
+## Refined originality argument
+
+Avoid selling RELIC as "an AI that clones websites" (already common). The differentiated product is **counterfactual behavioral archaeology**: interrogating an authorized old workflow to discover rules, reconstructing a modern accessible implementation and testing whether users can accomplish equivalent tasks. Each discovered fact carries evidence and unknowns. A valid business case is low-risk scoped *continuity assessment* before a costly full migration, subject to future customer validation.
+
+Technology, presentation, business value and originality are the official judging dimensions; use one end-to-end demo to demonstrate all four. See [Continuity Engineering](42-RELIC-2-0-NORTH-STAR.md).
