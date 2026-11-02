@@ -30,12 +30,14 @@ const $=id=>document.getElementById(id);
 const steps=[1,2,3];function show(n){steps.forEach(i=>$('step'+i).hidden=i!==n);$('error').textContent='';}
 $('next').onclick=()=>{if(!$('region').value){$('error').textContent='REGION_REQUIRED';return;}show(2);};
 $('back').onclick=()=>show(1);
-$('submit').onclick=()=>{
-const region=$('region').value,issue=$('issue').value,priority=$('priority').value,description=$('description').value.trim();
-if(!region){$('error').textContent='REGION_REQUIRED';return;}
-if(priority==='urgent'&&description.length<30){$('error').textContent='URGENT_DESCRIPTION_TOO_SHORT';return;}
-const out={accepted:true,code:region.toUpperCase()+'-'+issue.toUpperCase()+'-'+priority.toUpperCase(),description_length:description.length};
+$('submit').onclick=async()=>{
+const payload={region:$('region').value,issue:$('issue').value,priority:$('priority').value,description:$('description').value.trim()};
+try {
+const response=await fetch('/api/request',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+const out=await response.json();
+if(!out.accepted){$('error').textContent=out.error_code||'REQUEST_REJECTED';return;}
 $('result').textContent=JSON.stringify(out,null,2);show(3);
+}catch(error){$('error').textContent='SERVICE_UNAVAILABLE';}
 };
 $('restart').onclick=()=>{ $('description').value='';show(1);};
 })();

@@ -76,3 +76,15 @@ python3 -m unittest discover -s tests -p "test_relic_*.py" -v
 \`\`\`
 
 **Honest boundary:** This prototype uses handwritten reference and candidate models, *not* a live Playwright browser, Vultr inference or sandbox. Its JSON reports explicitly state these limitations. [Lab documentation](examples/relic-lab/README.md). The required cloud product, generated code/build, browser observations and containment remain unimplemented.
+
+### Black-box synthetic legacy fixture (server-side behavior)
+
+The owned 2008-style portal now has a **real local HTTP backend** with a conditional validation rule enforced server-side. The browser UI intentionally does not contain that rule; it must be discovered from synthetic behavior. Run the real local service:
+
+\`\`\`bash
+python3 examples/legacy-community-portal/server.py --port 8765
+# Visit http://127.0.0.1:8765
+python3 -m unittest discover -s tests -p "test_relic_*.py" -v
+\`\`\`
+
+See [owned legacy server README](examples/legacy-community-portal/README.md). This is **not** a deployed Vultr app or isolated Playwright worker; only a local, loopback-bound HTTP fixture, with no real accounts or data.

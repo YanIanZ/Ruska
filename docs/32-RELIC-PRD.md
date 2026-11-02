@@ -71,3 +71,6 @@ The **offline** Python parity lab uses a handwritten model of the owned syntheti
 Wrong candidate threshold 10 fails the known urgent-description case; correct threshold 30 passes four fixture cases. The bounded 0–40 description probe finds a counterexample to the wrong candidate but none against the matching model in that range. This is **coverage of a limited mock**, not global behavioral parity.
 
 See [Counterfactual Engine](43-COUNTERFACTUAL-ARCHAEOLOGY.md), [Passport](44-CONTINUITY-PASSPORT.md) and [two-speed delivery](46-RELIC-DELIVERY-SCORECARD.md).
+
+### Test-target authenticity refinement
+The original 2008-style fixture is served by a minimal local HTTP service with a server-side conditional validation rule. The browser-facing script cannot simply inspect a hardcoded threshold; a future observer must submit allowed synthetic inputs to discover it. This is an authored demo site and not actual archaeological recovery of an inaccessible production system. [Run instructions](../examples/legacy-community-portal/README.md).

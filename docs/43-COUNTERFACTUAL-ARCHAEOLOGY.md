@@ -54,3 +54,9 @@ The offline CLI under examples/relic-lab/ intentionally uses a **handwritten moc
 - Covered and uncovered states are independently represented.
 - Agent cannot expand target domains or execute an unbounded probe plan.
 - Tests report trace/source IDs and model version; no implied universal correctness.
+
+## More faithful black-box test target
+
+The owned legacy portal now exposes \`POST /api/request\` with its conditional priority/description rule enforced in [server.py](../examples/legacy-community-portal/server.py), not the page's JavaScript. This makes the intended agent task genuinely observation-driven at the HTTP/browser surface, although the authored fixture source remains public in GitHub for transparency. The included Python HTTP tests verify the service behavior; they **do not** establish that a real AI has discovered the rule using Playwright.
+
+Use the target only on loopback for local development or through a separately controlled owned demo service for Vultr browser worker integration.

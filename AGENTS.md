@@ -19,3 +19,6 @@ Before writing an agent loop, run the [offline parity lab](examples/relic-lab/RE
 Next implement the *real* browser-observed version: Playwright traces must come from a sandboxed owned site and must link each OBSERVED Genome rule to source evidence. Let Vultr Serverless Inference propose bounded probes and code changes; Go policy decides which actions may occur. Never present the handwritten reference model as real browser evidence, and never copy a third-party production app.
 
 Use [Continuity Engineering](docs/42-RELIC-2-0-NORTH-STAR.md), [Counterfactual Engine](docs/43-COUNTERFACTUAL-ARCHAEOLOGY.md), [Passport](docs/44-CONTINUITY-PASSPORT.md) and [Scorecard](docs/46-RELIC-DELIVERY-SCORECARD.md). Preserve explicit unknown states and real failed parity records.
+
+### Owned black-box fixture
+Run the [local legacy HTTP fixture](examples/legacy-community-portal/README.md) before implementing discovery. Its urgent-description rule lives server-side. New Playwright code should interact through browser-visible states/responses rather than reading the fixture's Python source to manufacture a discovery. CI's HTTP tests are only fixture verification; write additional genuine sandboxed Playwright tests with observed trace IDs for P0.

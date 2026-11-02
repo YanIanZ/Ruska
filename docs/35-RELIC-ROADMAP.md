@@ -29,3 +29,6 @@ If browser runner not working by Nov 4, cut auto-generation polish and fix brows
 ## 2.0 execution rules
 
 The active schedule is now tracked in [RELIC 2.0 scorecard](46-RELIC-DELIVERY-SCORECARD.md). **Critical path remains actual browser and code execution on Vultr**, not expansion into numerous tools. Counterfactual probing against a typed owned fixture is a high-value addition; broader autonomous discovery, second workflow, full Passport signatures, enterprise services and microVM optimization are stretch or post-event. The offline lab is runnable prep work but does not fulfill any cloud or sandbox requirement.
+
+### Concrete foundation now available
+The project-owned browser target is a loopback-only synthetic HTTP service with validation on the server. This is stronger than a self-contained static form, but **does not** satisfy the hackathon browser-in-Vultr sandbox requirement. Immediate P0 engineering step: deploy the owned mock service in an isolated demo environment, then execute Playwright from a separate restricted worker and record actual observation traces. [Fixture guide](../examples/legacy-community-portal/README.md).
