@@ -1,0 +1,9 @@
+{
+  "schema_version": "chord-experiment-v1",
+  "initial_stock": 1,
+  "reservation_size": 1,
+  "agents": [
+    "agent_a",
+    "agent_b"
+  ]
+}
