@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RUKSA mission event",
+  "type": "object", "additionalProperties": false,
+  "required": ["event_id", "mission_id", "run_id", "type", "occurred_at", "safe_payload"],
+  "properties": {
+    "event_id": {"type": "integer", "minimum": 1},
+    "mission_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "type": {"enum": ["mission.state", "run.step", "policy.decision", "finding.created", "run.terminal"]},
+    "state": {"type": "string"},
+    "occurred_at": {"type": "string", "format": "date-time"},
+    "safe_payload": {"type": "object", "additionalProperties": true}
+  }
+}

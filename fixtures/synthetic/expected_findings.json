@@ -1,0 +1,38 @@
+{
+  "dataset_id": "demo-2026-11-v1",
+  "record_count": 150,
+  "purchase_order_count": 150,
+  "expected_exception_count": 3,
+  "verified_price_variance_cents": 18000,
+  "currency": "USD",
+  "cases": [
+    {
+      "type": "PRICE_VARIANCE",
+      "invoice_record_ids": [
+        "INV-0042"
+      ],
+      "po_id": "PO-0042",
+      "amount_cents": 18000,
+      "rule_id": "price_variance_v1"
+    },
+    {
+      "type": "POSSIBLE_DUPLICATE",
+      "invoice_record_ids": [
+        "INV-0086",
+        "INV-0087"
+      ],
+      "amount_cents": null,
+      "rule_id": "duplicate_supplier_number_v1"
+    },
+    {
+      "type": "UNKNOWN_PO",
+      "invoice_record_ids": [
+        "INV-0121"
+      ],
+      "po_id": "PO-NOT-FOUND-121",
+      "amount_cents": null,
+      "rule_id": "missing_po_reference_v1"
+    }
+  ],
+  "note": "Synthetic ground truth only. No observed financial impact, bank transactions or real invoices."
+}

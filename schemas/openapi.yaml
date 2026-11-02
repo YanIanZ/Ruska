@@ -1,0 +1,299 @@
+openapi: 3.1.0
+info:
+  title: RUKSA API
+  version: 0.1.0-design
+  description: Planned API contract. This spec does NOT imply a deployed service.
+servers:
+  - url: https://ruksa.example.test
+    description: Placeholder deployment endpoint; not a live URL
+security:
+  - demoSession: []
+paths:
+  /healthz:
+    get:
+      security: []
+      operationId: health
+      responses:
+        '200': {description: Process live}
+  /readyz:
+    get:
+      security: []
+      operationId: ready
+      responses:
+        '200': {description: Dependencies available}
+        '503': {description: Not ready}
+  /v1/missions:
+    get:
+      operationId: listMissions
+      parameters:
+        - in: query
+          name: limit
+          schema: {type: integer, minimum: 1, maximum: 100, default: 20}
+      responses:
+        '200':
+          description: Session-scoped missions
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [items]
+                properties:
+                  items:
+                    type: array
+                    items: {$ref: '#/components/schemas/Mission'}
+    post:
+      operationId: createMission
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/CreateMission'}
+      responses:
+        '201':
+          description: Created mission
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Mission'}
+        '422': {$ref: '#/components/responses/ApiError'}
+  /v1/missions/{missionId}:
+    parameters:
+      - $ref: '#/components/parameters/MissionId'
+    get:
+      operationId: getMission
+      responses:
+        '200':
+          description: Mission
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Mission'}
+        '404': {$ref: '#/components/responses/ApiError'}
+  /v1/missions/{missionId}/runs:
+    parameters:
+      - $ref: '#/components/parameters/MissionId'
+    post:
+      operationId: startRun
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [execution_profile]
+              properties:
+                execution_profile: {type: string, enum: [demo-constrained]}
+      responses:
+        '202':
+          description: Queued run, not a promise of execution success
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Run'}
+        '409': {$ref: '#/components/responses/ApiError'}
+        '429': {$ref: '#/components/responses/ApiError'}
+  /v1/missions/{missionId}/runs/{runId}:
+    parameters:
+      - $ref: '#/components/parameters/MissionId'
+      - $ref: '#/components/parameters/RunId'
+    get:
+      operationId: getRun
+      responses:
+        '200':
+          description: Run
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Run'}
+        '404': {$ref: '#/components/responses/ApiError'}
+  /v1/missions/{missionId}/events:
+    parameters:
+      - $ref: '#/components/parameters/MissionId'
+      - name: Last-Event-ID
+        in: header
+        required: false
+        schema: {type: string}
+    get:
+      operationId: streamMissionEvents
+      responses:
+        '200':
+          description: SSE stream of sanitized events
+          content:
+            text/event-stream:
+              schema: {type: string}
+  /v1/missions/{missionId}/findings:
+    parameters:
+      - $ref: '#/components/parameters/MissionId'
+    get:
+      operationId: listFindings
+      responses:
+        '200':
+          description: Finding list
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [items]
+                properties:
+                  items:
+                    type: array
+                    items: {$ref: '#/components/schemas/Finding'}
+  /v1/missions/{missionId}/evidence:
+    parameters:
+      - $ref: '#/components/parameters/MissionId'
+    get:
+      operationId: getEvidence
+      responses:
+        '200':
+          description: Evidence manifest metadata (EVP-1 full schema in schemas folder)
+          content:
+            application/json:
+              schema: {type: object}
+  /v1/missions/{missionId}/approvals/{approvalId}:
+    parameters:
+      - $ref: '#/components/parameters/MissionId'
+      - in: path
+        name: approvalId
+        required: true
+        schema: {type: string, format: uuid}
+    post:
+      operationId: resolveApproval
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [decision, action_payload_sha256]
+              additionalProperties: false
+              properties:
+                decision: {type: string, enum: [APPROVED, REJECTED]}
+                action_payload_sha256: {type: string, pattern: '^[a-f0-9]{64}$'}
+      responses:
+        '200':
+          description: Resolved approval; draft only, no send/payment
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Approval'}
+        '409': {$ref: '#/components/responses/ApiError'}
+  /v1/missions/{missionId}/report:
+    parameters:
+      - $ref: '#/components/parameters/MissionId'
+    get:
+      operationId: getReport
+      responses:
+        '200':
+          description: Synthetic reconciliation report
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mission_id: {type: string, format: uuid}
+                  verified_price_variance_cents: {type: integer}
+                  findings:
+                    type: array
+                    items: {$ref: '#/components/schemas/Finding'}
+components:
+  securitySchemes:
+    demoSession:
+      type: apiKey
+      in: cookie
+      name: ruksa_demo_session
+      description: Expiring scoped HTTP-only session cookie, minted by trusted app gateway
+  parameters:
+    MissionId:
+      in: path
+      name: missionId
+      required: true
+      schema: {type: string, format: uuid}
+    RunId:
+      in: path
+      name: runId
+      required: true
+      schema: {type: string, format: uuid}
+    IdempotencyKey:
+      in: header
+      name: Idempotency-Key
+      required: true
+      schema: {type: string, minLength: 8, maxLength: 128}
+  responses:
+    ApiError:
+      description: Rejected request
+      content:
+        application/json:
+          schema: {$ref: '#/components/schemas/ErrorResponse'}
+  schemas:
+    CreateMission:
+      type: object
+      additionalProperties: false
+      required: [title, objective, dataset_id]
+      properties:
+        title: {type: string, minLength: 1, maxLength: 140}
+        objective: {type: string, minLength: 1, maxLength: 1000}
+        dataset_id: {type: string, enum: [demo-2026-11-v1]}
+        vendor_portal_url: {type: string, format: uri}
+    Mission:
+      type: object
+      required: [id, title, objective, dataset_id, status, created_at]
+      properties:
+        id: {type: string, format: uuid}
+        title: {type: string}
+        objective: {type: string}
+        dataset_id: {type: string}
+        status:
+          type: string
+          enum: [DRAFT, QUEUED, PLANNING, AWAITING_POLICY, EXECUTING, VERIFYING, NEEDS_REVIEW, COMPLETED, BLOCKED, FAILED, CANCELED]
+        input_sha256: {type: string, pattern: '^[a-f0-9]{64}$'}
+        created_at: {type: string, format: date-time}
+    Run:
+      type: object
+      required: [id, mission_id, status]
+      properties:
+        id: {type: string, format: uuid}
+        mission_id: {type: string, format: uuid}
+        status:
+          type: string
+          enum: [QUEUED, RUNNING, VERIFYING, SUCCEEDED, FAILED, BLOCKED, TIMED_OUT, CANCELED]
+        sandbox_id: {type: string}
+        termination_reason: {type: string}
+        started_at: {type: [string, 'null'], format: date-time}
+        ended_at: {type: [string, 'null'], format: date-time}
+    Finding:
+      type: object
+      required: [id, run_id, type, verification_status, evidence_ids, rule_id]
+      properties:
+        id: {type: string, format: uuid}
+        run_id: {type: string, format: uuid}
+        type: {type: string, enum: [PRICE_VARIANCE, POSSIBLE_DUPLICATE, UNKNOWN_PO]}
+        verification_status: {type: string, enum: [UNVERIFIED, VERIFIED, INCONCLUSIVE, REJECTED]}
+        evidence_ids:
+          type: array
+          items: {type: string}
+        invoice_record_id: {type: string}
+        po_record_id: {type: string}
+        amount_cents: {type: [integer, 'null']}
+        currency: {type: string, enum: [USD]}
+        rule_id: {type: string}
+        explanation: {type: string}
+    Approval:
+      type: object
+      required: [id, mission_id, status, action_payload_sha256]
+      properties:
+        id: {type: string, format: uuid}
+        mission_id: {type: string, format: uuid}
+        status: {type: string, enum: [PENDING, APPROVED, REJECTED, EXPIRED]}
+        action_payload_sha256: {type: string, pattern: '^[a-f0-9]{64}$'}
+    ErrorResponse:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: object
+          required: [code, message, trace_id]
+          properties:
+            code: {type: string}
+            message: {type: string}
+            trace_id: {type: string}
+            details: {type: object}

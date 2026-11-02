@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/YanIanZ/RUKSA/blob/main/schemas/plan.schema.json",
+  "title": "RUKSA typed agent plan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "objective", "max_budget", "steps"],
+  "properties": {
+    "schema_version": {"const": "ruksa-plan-v1"},
+    "objective": {"type": "string", "minLength": 1, "maxLength": 1000},
+    "max_budget": {
+      "type": "object", "additionalProperties": false,
+      "required": ["max_steps", "max_wall_seconds", "max_model_calls"],
+      "properties": {
+        "max_steps": {"type": "integer", "minimum": 1, "maximum": 8},
+        "max_wall_seconds": {"type": "integer", "minimum": 1, "maximum": 180},
+        "max_model_calls": {"type": "integer", "minimum": 1, "maximum": 10}
+      }
+    },
+    "steps": {
+      "type": "array", "minItems": 1, "maxItems": 8,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["id", "tool", "goal", "depends_on", "input_refs"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^[a-z][a-z0-9_-]{1,35}$"},
+          "tool": {"enum": ["parse_documents", "execute_python", "browse_allowlisted_vendor", "verify_findings", "prepare_action_draft"]},
+          "goal": {"type": "string", "minLength": 1, "maxLength": 500},
+          "depends_on": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+          "input_refs": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+          "expected_output": {"type": "string", "maxLength": 300}
+        }
+      }
+    }
+  },
+  "description": "Structural checks only. The orchestrator MUST separately validate step-ID uniqueness, DAG acyclicity, input authorization and per-tool resource policy."
+}
