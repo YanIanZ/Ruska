@@ -1,0 +1,21 @@
+name: chord-offline-fixture-validation
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Offline synthetic model unit tests
+        run: python -m unittest discover -s tests -v
+      - name: Offline schedule demo
+        run: python -m chord.cli --json > /tmp/chord-offline-report.json
+      - name: Validate report safeguards
+        run: |
+          python -c 'import json; d=json.load(open("/tmp/chord-offline-report.json")); assert d["baseline"]["violations"] == 18; assert d["patched"]["violations"] == 0; assert d["isolated_sandbox_used"] is False; assert d["llm_called"] is False'
