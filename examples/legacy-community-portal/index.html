@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Community Service Request — Legacy Demo</title>
+<style>
+body{font:13px Verdana,Arial;background:#dfdfd3;color:#202020;margin:0}
+#shell{max-width:720px;margin:28px auto;border:5px ridge #aaa;background:#f8f7ed;padding:15px}
+h1{font-size:23px;background:#34436c;color:white;padding:12px;margin:0}
+.notice{background:#fff0b0;border:1px solid #b29842;padding:10px;margin:10px 0}
+table{width:100%;border-spacing:8px}th{text-align:left;width:160px}
+input,select,textarea{font:13px Verdana;padding:5px;max-width:100%;box-sizing:border-box}
+button{font:14px Verdana;border:3px outset #b5b5b5;padding:7px 16px;background:#d6d6d6}
+.error{color:#9b0000}#result{background:white;border:1px solid #777;padding:12px;white-space:pre-wrap}
+</style></head><body><main id="shell">
+<h1>COMMUNITY DESK 2008 — REQUEST CENTER</h1>
+<p class="notice">This is a fictional, project-owned legacy-style demo. Never enter real personal information.</p>
+<form id="request">
+<section id="step1"><h2>Step 1 / 3 — Select Request</h2>
+<table><tr><th>Area</th><td><select id="region"><option value="">Choose...</option><option>North</option><option>Center</option><option>South</option></select></td></tr>
+<tr><th>Problem Type</th><td><select id="issue"><option value="streetlight">Broken Streetlight</option><option value="drain">Blocked Drain</option><option value="pavement">Damaged Pavement</option></select></td></tr>
+<tr><th>Priority</th><td><select id="priority"><option value="normal">Normal</option><option value="urgent">Urgent</option></select></td></tr></table>
+<button type="button" id="next">Next &gt;&gt;</button></section>
+<section id="step2" hidden><h2>Step 2 / 3 — Describe</h2>
+<p><textarea id="description" rows="4" cols="66" placeholder="Explain the synthetic issue"></textarea></p>
+<button type="button" id="back">&lt;&lt; Back</button> <button type="button" id="submit">Submit Test Request</button></section>
+<section id="step3" hidden><h2>Step 3 / 3 — Confirmation</h2><pre id="result" aria-live="polite"></pre><button type="button" id="restart">Start again</button></section>
+<p class="error" id="error" role="alert"></p></form>
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const steps=[1,2,3];function show(n){steps.forEach(i=>$('step'+i).hidden=i!==n);$('error').textContent='';}
+$('next').onclick=()=>{if(!$('region').value){$('error').textContent='REGION_REQUIRED';return;}show(2);};
+$('back').onclick=()=>show(1);
+$('submit').onclick=()=>{
+const region=$('region').value,issue=$('issue').value,priority=$('priority').value,description=$('description').value.trim();
+if(!region){$('error').textContent='REGION_REQUIRED';return;}
+if(priority==='urgent'&&description.length<30){$('error').textContent='URGENT_DESCRIPTION_TOO_SHORT';return;}
+const out={accepted:true,code:region.toUpperCase()+'-'+issue.toUpperCase()+'-'+priority.toUpperCase(),description_length:description.length};
+$('result').textContent=JSON.stringify(out,null,2);show(3);
+};
+$('restart').onclick=()=>{ $('description').value='';show(1);};
+})();
+</script></main></body></html>

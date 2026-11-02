@@ -1,0 +1,128 @@
+openapi: 3.1.0
+info:
+  title: RUKSA RELIC Restoration API
+  version: 0.1.0-design
+  description: Proposed contract; no deployed implementation is implied.
+servers:
+  - url: https://relic.example.test
+security:
+  - demoSession: []
+paths:
+  /healthz:
+    get:
+      security: []
+      responses:
+        '200': {description: Live}
+  /readyz:
+    get:
+      security: []
+      responses:
+        '200': {description: Ready}
+        '503': {description: Unavailable}
+  /v1/restorations:
+    post:
+      summary: Create session-owned restoration for owned registered fixture
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [fixture_id]
+              properties:
+                fixture_id: {type: string, enum: [owned-mock-community-service-request]}
+      responses:
+        '201': {description: Created}
+        '403': {description: Unauthorized}
+        '422': {description: Fixture not allowed}
+  /v1/restorations/{id}:
+    parameters:
+      - $ref: '#/components/parameters/RestorationId'
+    get:
+      responses:
+        '200': {description: Restoration status}
+        '404': {description: Not found or not owned}
+  /v1/restorations/{id}/discover:
+    parameters:
+      - $ref: '#/components/parameters/RestorationId'
+    post:
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '202': {description: Browser observation queued}
+        '403': {description: Policy denied}
+  /v1/restorations/{id}/genome:
+    parameters:
+      - $ref: '#/components/parameters/RestorationId'
+    get:
+      responses:
+        '200': {description: Observed behavior and unknowns}
+  /v1/restorations/{id}/genome/approve:
+    parameters:
+      - $ref: '#/components/parameters/RestorationId'
+    post:
+      description: Requires owner authorization and CSRF or Origin check
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [genome_digest]
+              properties:
+                genome_digest: {type: string, pattern: '^[a-f0-9]{64}$'}
+      responses:
+        '200': {description: Approved exact genome revision}
+        '409': {description: Stale revision}
+  /v1/restorations/{id}/generate:
+    parameters:
+      - $ref: '#/components/parameters/RestorationId'
+    post:
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '202': {description: AI code generation and isolated build queued}
+  /v1/restorations/{id}/parity:
+    parameters:
+      - $ref: '#/components/parameters/RestorationId'
+    post:
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      responses:
+        '202': {description: Paired browser parity jobs queued}
+  /v1/restorations/{id}/events:
+    parameters:
+      - $ref: '#/components/parameters/RestorationId'
+    get:
+      responses:
+        '200':
+          description: Session-scoped monotonic SSE events
+          content:
+            text/event-stream:
+              schema: {type: string}
+  /v1/restorations/{id}/capsule:
+    parameters:
+      - $ref: '#/components/parameters/RestorationId'
+    get:
+      responses:
+        '200': {description: Reviewed human handoff artifact}
+        '409': {description: Not approved for export}
+components:
+  securitySchemes:
+    demoSession:
+      type: apiKey
+      in: cookie
+      name: ruksa_demo_session
+      description: Expiring secure HttpOnly SameSite owner-scoped cookie; CSRF check on mutations
+  parameters:
+    RestorationId:
+      name: id
+      in: path
+      required: true
+      schema: {type: string, format: uuid}
+    IdempotencyKey:
+      name: Idempotency-Key
+      in: header
+      required: true
+      schema: {type: string, minLength: 8, maxLength: 128}
