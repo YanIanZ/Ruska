@@ -2,7 +2,7 @@
 
 > **Status:** Pre-implementation specification / hackathon planning. **No running service or deployed application is claimed.**
 
-RUKSA is a **proof-carrying autonomous operations agent**. It plans and executes real procurement-reconciliation work inside isolated Vultr sandboxes, checks its findings with deterministic rules, and returns an auditable evidence bundle. Human approval remains mandatory for any downstream business-changing action.
+RUKSA is a **verifiable autonomous execution fabric**, demonstrated first through a procurement operations agent. It plans and executes real procurement-reconciliation work inside isolated Vultr sandboxes, checks its findings with deterministic rules, and returns an auditable evidence bundle. Human approval remains mandatory for any downstream business-changing action.
 
 **Hackathon:** [Vultr: Agent Rush Hackathon](https://lablab.ai/ai-hackathons/vultr-hackathon) (3–8 November 2026)  
 **Primary challenge:** Blast Radius Zero · **Secondary business domain:** procurement / finance operations  
@@ -105,3 +105,9 @@ See [`CONTRIBUTING.md`](CONTRIBUTING.md), [`SECURITY.md`](SECURITY.md), and [`AG
 - https://lablab.ai/ai-hackathons/vultr-hackathon/live
 - https://community.vultr.com/e/vultr-agent-rush-hackathon
 - https://docs.vultr.com/how-to-set-up-agent-sandboxing-on-vultr-cloud-compute
+
+## Ambitious Fabric direction (design, not deployed)
+
+The expanded RUKSA concept adds **Mission Capsules**, **ProofPacks**, **Adversarial Twin Lite**, and **Containment Theater**. The first six-day build remains a single real procurement mission and a measurable containment demonstration; no universal agent, microVM, signed key service or enterprise platform is claimed as implemented.
+
+Read [vision](docs/25-FABRIC-VISION.md), [ProofPack](docs/26-PROOFPACK-DESIGN.md), [zero-trust design](docs/27-ZERO-TRUST-FABRIC.md), [roadmap](docs/28-AMBITION-ROADMAP.md), [review actions](docs/29-REVIEW-ACTION-REGISTER.md), and [demo playbook](docs/30-CONTAINMENT-THEATER.md).

@@ -57,3 +57,19 @@
 - **Context:** A public hackathon URL must be usable but anonymous unbounded code execution is dangerous.
 - **Decision:** Signed short-lived demo sessions, per-session quotas, fixed sample mission and strict sandbox policy; no full customer account system during event.
 - **Consequences:** Accessible demo with constrained feature set and protected compute budget.
+
+## ADR-009 — Reusable Fabric, narrow hackathon vertical slice
+- **Status:** Proposed; date 2026-11-03.
+- **Decision:** Mission Capsule/ProofPack are general primitives, procurement remains sole required shipped workflow.
+
+## ADR-010 — Conditional microVM worker
+- **Status:** Proposed.
+- **Decision:** Prefer Microsandbox if Vultr KVM and independent egress restrictions are validated, else hardened VM-isolated container with truthful risk disclosure.
+
+## ADR-011 — Verifier authority
+- **Status:** Proposed.
+- **Decision:** Deterministic trusted Go recomputation is authoritative; optional shadow replay only raises inconsistency signals.
+
+## ADR-012 — Distinguish integrity, truth and containment
+- **Status:** Proposed.
+- **Decision:** Never collapse signed bytes, valid business result, source authenticity and runtime containment into one verified badge.

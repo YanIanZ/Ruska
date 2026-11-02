@@ -1,6 +1,6 @@
 # RUKSA Document Index
 
-**Edition:** 1.0 · **Baseline date:** 2026-11-02 · **Owner:** YanIanZ · **Status:** planned, not implemented.
+**Edition:** 1.1 (Fabric vision addendum) · **Baseline date:** 2026-11-02 · **Owner:** YanIanZ · **Status:** planned, not implemented.
 
 RUKSA is a product specification for an evidence-first autonomous procurement agent under the Vultr **Blast Radius Zero** challenge. All prescriptive choices are proposed implementation designs, not statements about deployed functionality.
 
@@ -52,3 +52,16 @@ Official event: https://lablab.ai/ai-hackathons/vultr-hackathon. Main challenge 
 ## Versioning and completion
 
 Specifications are **proposed design v1.0**. Each implementation item must be separately marked done by actual tests and linked commits. Planned P0 work must not be described as shipped until acceptance gates pass.
+
+## New Fabric design addenda (not shipped)
+
+| Doc | Purpose |
+|---|---|
+| [25-FABRIC-VISION](25-FABRIC-VISION.md) | Product platform vision, product primitives and scope |
+| [26-PROOFPACK-DESIGN](26-PROOFPACK-DESIGN.md) | Verifiable receipt semantics and EVP-1 migration caveats |
+| [27-ZERO-TRUST-FABRIC](27-ZERO-TRUST-FABRIC.md) | MicroVM decisions, egress, sessions and worker capabilities |
+| [28-AMBITION-ROADMAP](28-AMBITION-ROADMAP.md) | Hackathon Tier H/S/P delivery gates and cut rules |
+| [29-REVIEW-ACTION-REGISTER](29-REVIEW-ACTION-REGISTER.md) | Open architecture and security review findings |
+| [30-CONTAINMENT-THEATER](30-CONTAINMENT-THEATER.md) | Owned-fixture security demo playbook |
+
+These docs supplement but do not silently replace the v1 OpenAPI and EVP-1 schemas; status remains design-only.

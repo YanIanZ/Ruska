@@ -26,7 +26,7 @@
 | SUB-01 | P0 | Record demo including verified containment | all P0 core | Video visibly shows actual policy outcome |
 | SUB-02 | P0 | Publish public URL + docs + submission metadata | SUB-01 | Valid lablab confirmation |
 | WORK-03 | P1 | Hardened Playwright browser for mock vendor portal | WORK-02 | Redirect/SSRF restriction tested |
-| EVD-03 | P1 | Sign JCS canonical manifest with Ed25519 | EVD-02 | Tampered artifact and signature rejected |
+| EVD-03 | P0 | Sign JCS canonical manifest with Ed25519 | EVD-02 | Tampered artifact and signature rejected |
 | WEB-04 | P1 | Accessible containment monitor | WORK-02 | Shows real limits, teardown outcome |
 | WEB-05 | P1 | CSV/JSON/PDF report export | EVD-02 | Export traceable and CSV sanitized |
 | CORE-05 | P1 | Immutable mission replay | CORE-02 | New run, same snapshot digest |
@@ -53,3 +53,19 @@
 ## Critical path policy
 
 If the project falls behind by 12 hours, drop PDF and replay. If behind by 24 hours, drop optional browser feature. Never substitute fake execution logs for the real sandbox. If isolation is not working, fail launch instead of removing guardrails.
+
+## Fabric ambition backlog (new proposals)
+
+| Task | Target | Acceptance |
+|---|---|---|
+| FAB-01 Mission Capsule | P0 | Immutable policy and one-use job capability enforced |
+| FAB-02 Adversarial Twin Lite | P0 | Trusted Go verifier rejects model $190 claim against $180 oracle |
+| FAB-03 ProofPack v1 | P0 | Source-to-code-to-verifier evidence shown with honest assurance flags |
+| FAB-04 Containment Theater | P0 | Real timeout, blocked egress, and guest cleanup measurements |
+| FAB-05 Session/CSRF hardening | P0 | Cross-session and unauthorized mutation negative tests |
+| FAB-06 MicroVM runtime | P1 | KVM check + guest/egress isolation tests pass; fallback documented |
+| FAB-07 Shadow replay | P1 | Disagreement becomes INCONCLUSIVE |
+| FAB-08 Offline signature verifier | P1 | Tampered manifest rejected |
+| FAB-09 SDK/Policy Studio | P2 | New specs after hackathon |
+
+EVD-03 is now a high-priority P0 signing goal, but unfinished cryptography may never be represented as signed; a clearly UNSIGNED hash-anchored live demo is an honest scope fallback, not a bypass of sandbox security. Follow [two-speed plan](28-AMBITION-ROADMAP.md).
