@@ -1,0 +1,26 @@
+name: documentation-and-fixtures
+on:
+  push:
+  pull_request:
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate active RELIC fixture truth set
+        run: python3 scripts/validate_relic_fixtures.py
+      - name: Validate local documentation links and JSON schema syntax
+        run: python3 scripts/check_docs.py
+      - name: Compile helper scripts
+        run: python3 -m compileall -q scripts
+      - name: Run RELIC offline parity lab unit tests
+        run: python3 -m unittest discover -s tests -p 'test_relic_*.py' -v
+      - name: Check corrected candidate in offline lab
+        run: python3 examples/relic-lab/parity_lab.py --candidate examples/relic-lab/candidate-correct.json
+      - name: Legacy procurement fixture verification (historical only)
+        run: python3 scripts/validate_fixtures.py

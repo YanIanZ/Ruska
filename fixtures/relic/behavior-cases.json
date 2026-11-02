@@ -1,0 +1,61 @@
+{
+  "schema_version": "relic-fixture-v1",
+  "app": "owned-mock-community-service-request",
+  "source": "examples/legacy-community-portal/index.html",
+  "rights": "RUKSA authored synthetic demo",
+  "cases": [
+    {
+      "id": "VALID-1",
+      "input": {
+        "region": "North",
+        "issue": "streetlight",
+        "priority": "normal",
+        "description": "Streetlight near the synthetic library is off."
+      },
+      "expected": {
+        "accepted": true,
+        "code": "NORTH-STREETLIGHT-NORMAL"
+      }
+    },
+    {
+      "id": "INVALID-REGION",
+      "input": {
+        "region": "",
+        "issue": "streetlight",
+        "priority": "normal",
+        "description": "Streetlight is off."
+      },
+      "expected": {
+        "accepted": false,
+        "error_code": "REGION_REQUIRED"
+      }
+    },
+    {
+      "id": "BOUNDARY-FAIL",
+      "input": {
+        "region": "Center",
+        "issue": "drain",
+        "priority": "urgent",
+        "description": "Water rises fast."
+      },
+      "expected": {
+        "accepted": false,
+        "error_code": "URGENT_DESCRIPTION_TOO_SHORT"
+      }
+    },
+    {
+      "id": "BOUNDARY-PASS",
+      "input": {
+        "region": "Center",
+        "issue": "drain",
+        "priority": "urgent",
+        "description": "Water is rising near the synthetic community center."
+      },
+      "expected": {
+        "accepted": true,
+        "code": "CENTER-DRAIN-URGENT"
+      }
+    }
+  ],
+  "notes": "All data are synthetic. This fixture specifies expected behavior, not a record of executed Playwright tests."
+}

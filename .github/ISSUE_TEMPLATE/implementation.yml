@@ -1,0 +1,27 @@
+name: Implementation Task
+description: A scoped RUKSA delivery ticket with a reproducible acceptance gate
+labels: []
+body:
+  - type: input
+    id: task
+    attributes:
+      label: Backlog ID
+      placeholder: CORE-01
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Task objective and boundaries
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria and negative tests
+    validations:
+      required: true
+  - type: textarea
+    id: deps
+    attributes:
+      label: Dependencies and security risks

@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/YanIanZ/RUKSA/blob/main/schemas/evidence-manifest.schema.json",
+  "title": "RUKSA Evidence Manifest EVP-1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "mission_id", "run_id", "input_sha256", "plan_sha256", "policy_version", "verifier_version", "artifacts", "findings", "execution_summary", "issued_at", "integrity"],
+  "properties": {
+    "schema_version": {"const": "evp-1"},
+    "mission_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "input_sha256": {"$ref": "#/$defs/hash"},
+    "plan_sha256": {"$ref": "#/$defs/hash"},
+    "policy_version": {"type": "string"},
+    "verifier_version": {"type": "string"},
+    "issued_at": {"type": "string", "format": "date-time"},
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["artifact_id", "type", "sha256", "size_bytes", "origin", "created_at"],
+        "properties": {
+          "artifact_id": {"type": "string"},
+          "type": {"enum": ["SOURCE_ROW", "EXECUTION", "BROWSER_CAPTURE", "VERIFICATION", "POLICY_DECISION", "ACTION_DRAFT"]},
+          "sha256": {"$ref": "#/$defs/hash"},
+          "size_bytes": {"type": "integer", "minimum": 0},
+          "origin": {"type": "string", "minLength": 1},
+          "created_at": {"type": "string", "format": "date-time"},
+          "locator": {"type": "string"}
+        }
+      }
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["finding_id", "type", "verification_status", "artifact_ids", "rule_id"],
+        "properties": {
+          "finding_id": {"type": "string"},
+          "type": {"enum": ["PRICE_VARIANCE", "POSSIBLE_DUPLICATE", "UNKNOWN_PO"]},
+          "verification_status": {"enum": ["UNVERIFIED", "VERIFIED", "INCONCLUSIVE", "REJECTED"]},
+          "artifact_ids": {"type": "array", "items": {"type": "string"}, "minItems": 1, "uniqueItems": true},
+          "rule_id": {"type": "string"},
+          "amount_cents": {"type": ["integer", "null"]},
+          "currency": {"enum": ["USD"]}
+        }
+      }
+    },
+    "execution_summary": {
+      "type": "object", "additionalProperties": false,
+      "required": ["steps_executed", "sandbox_destroyed", "outcome"],
+      "properties": {
+        "steps_executed": {"type": "integer", "minimum": 0},
+        "sandbox_destroyed": {"type": "boolean"},
+        "outcome": {"enum": ["SUCCEEDED", "FAILED", "BLOCKED", "TIMED_OUT", "CANCELED"]}
+      }
+    },
+    "integrity": {
+      "type": "object", "additionalProperties": false,
+      "required": ["status", "manifest_sha256"],
+      "properties": {
+        "status": {"enum": ["UNSIGNED", "SIGNED"]},
+        "manifest_sha256": {"$ref": "#/$defs/hash"},
+        "signature": {"type": "string"},
+        "signing_key_id": {"type": "string"}
+      },
+      "if": {"properties": {"status": {"const": "SIGNED"}}},
+      "then": {"required": ["signature", "signing_key_id"]}
+    }
+  },
+  "$defs": {
+    "hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+  },
+  "description": "When computing manifest_sha256/signature, exclude the whole integrity object from canonicalized signed payload; bind that payload's hash in integrity.manifest_sha256. Sign canonical payload + schema_version in a documented EVP-1 implementation."
+}

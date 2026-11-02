@@ -1,0 +1,34 @@
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+secrets/
+
+# Builds
+node_modules/
+.next/
+dist/
+build/
+coverage/
+*.log
+__pycache__/
+.pytest_cache/
+.venv/
+venv/
+*.pyc
+bin/
+
+# IDE and OS
+.DS_Store
+.idea/
+.vscode/
+
+# Runtime state
+artifacts/
+uploads/
+sandbox-workdir/
+*.sqlite*
+*.db
