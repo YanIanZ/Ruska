@@ -1,3 +1,9 @@
+# SUPERSEDED — Historical RUKSA Concept (NOT CURRENT SCOPE)
+
+> Current product is **RUKSA RELIC**, the Autonomous Digital Restoration Studio. See [active PRD](32-RELIC-PRD.md), [architecture](33-RELIC-ARCHITECTURE.md), and [security](36-RELIC-SECURITY.md). The text below is retained for historical reference and must not be used as RELIC implementation instructions.
+
+---
+
 # Technical Specification — RUKSA v1
 
 ## 1. Technology choices
